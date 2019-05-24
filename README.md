@@ -1,25 +1,32 @@
-# Note
-network architecture, data preprocessing, related paper for project 2
-
+# Notice：在此更新进度
 根据的代码改写了TensorFlow-gpu 1.4版本的ResNet，目前可以运行
 
 # CS385 Pipeline
 
-## Dataset (Recommended)
+###Dataset (Recommended)
 
 ##### Classificaiton
 
 - MNIST
 - CIFAR-10
-
-##### Object Detection
-
 - CUB200-2011
-
 - Pascal VOC 2012
 - Stanford dogs datasets
 
-## Task
+##### Reconstruction
+
+- MNIST
+- CIFAR-10
+- CUB200-2011
+- Pascal VOC 2012
+- Stanford dogs datasets
+
+#####Segmentation
+
+- CUB200-2011
+- Pascal VOC 2012
+
+###Task
 
 #### Multi-category classification 多分类问题
 
