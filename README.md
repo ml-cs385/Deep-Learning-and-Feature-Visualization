@@ -3,7 +3,7 @@
 
 # CS385 Pipeline
 
-###Dataset (Recommended)
+### Dataset (Recommended)
 
 ##### Classificaiton
 
@@ -21,12 +21,12 @@
 - Pascal VOC 2012
 - Stanford dogs datasets
 
-#####Segmentation
+##### Segmentation
 
 - CUB200-2011
 - Pascal VOC 2012
 
-###Task
+### Task
 
 #### Multi-category classification 多分类问题
 
