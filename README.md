@@ -130,6 +130,6 @@ network architecture, data preprocessing, related paper for project 2
 | ------ | -------------------- |
 | 曹梦奇 | 5                    |
 | 李东岳 | 1&4                  |
-| 孙荣一 | 2                    |
+| 孙容一 | 2                    |
 | 王皓轩 | 3                    |
 
