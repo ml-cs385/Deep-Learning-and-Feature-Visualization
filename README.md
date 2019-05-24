@@ -47,6 +47,8 @@ network architecture, data preprocessing, related paper for project 2
 
 要求:  Variational Auto-Encoder
 
+
+
 ### More Detailed Tasks
 
 1. 写每个数据集对应的DataLoader文件
@@ -121,3 +123,13 @@ network architecture, data preprocessing, related paper for project 2
 5. Image Reconstruction（Mengqi自己写一下）
 
    - To be written
+
+### 任务分配
+
+| 组员   | 任务（根据上文标号） |
+| ------ | -------------------- |
+| 曹梦奇 | 5                    |
+| 李东岳 | 1&4                  |
+| 孙荣一 | 2                    |
+| 王皓轩 | 3                    |
+
