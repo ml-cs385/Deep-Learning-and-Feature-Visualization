@@ -8,7 +8,7 @@ import numpy as np
 
 
 # the diffenent layers' name in vgg16 can be find in 
-#layername.txt
+# http://www.itdaan.com/blog/2017/06/04/6e0e221787b74092d62a4e86a4b0279a.html
 # we can get one layer's output to build our own model
 
 def get_vgg16_feature(x,layer_name):
@@ -47,14 +47,20 @@ def build_model_change_conv(InputShape,classes):
 # from keras.optimizers import xxx
 # set para for xxx like sgd
 
-def train_model(train_x,train_y,learning_rate,Epoch):
+def train_model_change_dense(train_x,train_y,learning_rate,Epoch):
     train_x=preprocess_input(train_x)
     classes=train_y[0].shape[0]
-    # different input with different network 
-    # change the dense layer 
-    #train_x=get_vgg16_feature(train_x,'flatten')
-    #model=build_model_change_dense(train_x[0].shape,classes)
-    # change the conv layer
+    train_x=get_vgg16_feature(train_x,'flatten')
+    model=build_model_change_dense(train_x[0].shape,classes)
+    sgd = SGD(lr=learning_rate, decay=1e-6, momentum=0.9, nesterov=True) 
+    model.compile(loss='categorical_crossentropy', optimizer=sgd,metrics=['accuracy'])
+    model.fit(train_x,train_y,epochs=Epoch)
+    model.save("change_dense_model.h5")
+    return model
+
+def train_model_change_conv(train_x,train_y,learning_rate,Epoch):
+    train_x=preprocess_input(train_x)
+    classes=train_y[0].shape[0]
     train_x=get_vgg16_feature(train_x,'block4_pool')
     model=build_model_change_conv(train_x[0].shape,classes)
     # optimize way
@@ -66,16 +72,21 @@ def train_model(train_x,train_y,learning_rate,Epoch):
     model.save("change_conv.h5")
     return model
 
-def test_acc(test_x,test_y):
+def test_acc_change_conv(test_x,test_y):
     test_x=preprocess_input(test_x)
-    #test_x=get_vgg16_feature(test_x,'flatten')
-    #model = keras.models.load_model('cnn_model.h5')
     test_x=get_vgg16_feature(test_x,'block4_pool')
     model = keras.models.load_model('change_conv.h5')
     #model.summary()
     loss,accu=model.evaluate(test_x,test_y)
     return loss,accu
 
+def test_acc_change_dense(test_x,test_y):
+    test_x=preprocess_input(test_x)
+    test_x=get_vgg16_feature(test_x,'flatten')
+    model = keras.models.load_model('cnn_model.h5')
+    #model.summary()
+    loss,accu=model.evaluate(test_x,test_y)
+    return loss,accu
 
 
 
@@ -89,8 +100,8 @@ if __name__ == "__main__":
     # prepare train_x and train_y
     # make sure that every vector in train_x is like: x = image.img_to_array(img) and label like [[1,0],[0,0]]
     label=np.array([[1,0]])
-    train_model(x,label,0.01,1)    
-    test_acc(x,label)
+    train_model_change_conv(x,label,0.01,1)    
+    test_acc_change_conv(x,label)
     
 
 
