@@ -8,7 +8,7 @@ import numpy as np
 
 
 # the diffenent layers' name in vgg16 can be find in 
-# http://www.itdaan.com/blog/2017/06/04/6e0e221787b74092d62a4e86a4b0279a.html
+#layername.txt
 # we can get one layer's output to build our own model
 
 def get_vgg16_feature(x,layer_name):
