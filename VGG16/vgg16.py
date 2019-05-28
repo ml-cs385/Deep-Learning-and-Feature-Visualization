@@ -13,8 +13,8 @@ import numpy as np
 
 def get_vgg16_feature(x,layer_name):
     base_model = VGG16(weights='imagenet',include_top=True)
-    flatten = Model(inputs=base_model.input, outputs=base_model.get_layer(layer_name).output) # the layer after all conv
-    features= flatten.predict(x)
+    layer = Model(inputs=base_model.input, outputs=base_model.get_layer(layer_name).output) # the layer after all conv
+    features= layer.predict(x)
     return features
 
 def build_model_change_dense(InputShape,classes):    
