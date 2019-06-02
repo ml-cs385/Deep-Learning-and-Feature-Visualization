@@ -10,7 +10,7 @@ import os
 
 # Paths
 # Declare your data paths
-CIFAR_DATA_PATH = ""
+CIFAR_DATA_PATH = "./cifar-10-batches-py/"
 
 '''
 Father Class Dataloader
@@ -79,7 +79,7 @@ class DataLoader:
     '''
     In training neural network: to generate one hot vector
     '''
-    def __one_hot(self, vec, vals=10): 
+    def one_hot(self, vec, vals=10): 
         n = len(vec)
         out = np.zeros((n, vals))
         out[range(n), vec] = 1
@@ -109,13 +109,13 @@ class DataLoader_MNIST(DataLoader):
     def resize_images(self):
         pass
 
-class DataLoader_CIFAR10(DataLoader):
+class DataLoader_CIFAR(DataLoader):
     def __init__(self):
         super().__init__()
 
     def __unpickle(self, file):
         with open(os.path.join(CIFAR_DATA_PATH, file), 'rb') as fo:
-            dict = pickle.load(fo)
+            dict = pickle.load(fo, encoding='latin1')
         return dict
 
     def load_dataset(self):
@@ -153,7 +153,7 @@ def display_cifar(images, size):
 
 
 if __name__ == "__main__":
-    Data = DataLoader_MNIST()
+    Data = DataLoader_CIFAR()
     Data.load_dataset()
     Data.save_dataset()
     Data.load_pickle_dataset()
