@@ -7,3 +7,6 @@ cifar-10-batches-py/data_batch_4
 cifar-10-batches-py/data_batch_5
 *.html
 cifar-10-batches-py/test_batch
+*.jpg
+*.txt
+CUB_200_2011/README

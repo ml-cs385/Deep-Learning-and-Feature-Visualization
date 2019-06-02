@@ -6,11 +6,13 @@ import matplotlib.pyplot as plt
 import tensorflow as tf
 import numpy as np
 import pickle
+import cv2
 import os
 
 # Paths
 # Declare your data paths
 CIFAR_DATA_PATH = "./cifar-10-batches-py/"
+CUB_DATA_PATH = "./CUB_200_2011/images/"
 
 '''
 Father Class Dataloader
@@ -140,8 +142,9 @@ class DataLoader_CIFAR(DataLoader):
         print("Load Dataset Successfully! Train Data Length: %d\t Test Data Length: %d" %
             (self.train_length, self.test_length))
 
-        
-
+'''
+Display CIFAR
+'''
 def display_cifar(images, size):
     n = len(images)
     plt.figure()
@@ -151,9 +154,47 @@ def display_cifar(images, size):
     plt.imshow(im)
     plt.show()  
 
+class DataLoader_CUB(DataLoader):
+    def __init__(self):
+        super().__init__()
+
+    def load_dataset(self):
+        whole_data = []
+        whole_label = []
+
+        for class_dir in os.listdir(CUB_DATA_PATH):
+            class_num = class_dir.split(".")[0]
+            class_num = int(class_num)
+            for image_dir in os.listdir(os.path.join(CUB_DATA_PATH, class_dir)):
+                tmp_image_dir = os.path.join(CUB_DATA_PATH, class_dir, image_dir)
+                img = cv2.imread(tmp_image_dir)
+
+                ''' if the color reformation is needed '''
+                b,g,r=cv2.split(img)
+                img=cv2.merge([r,g,b])
+                ''' ended '''
+
+                whole_data.append(img)
+                whole_label.append(class_num)
+            print(class_dir)
+            print(class_num)
+
+        whole_data = np.array(whole_data)
+        whole_label = np.array(whole_label)
+        permutation = np.random.permutation(len(whole_data))
+        whole_data = whole_data[permutation]
+        whole_label = whole_label[permutation]
+
+        self.train_data = whole_data[:int(len(whole_data)*0.6)]
+        self.train_label = whole_label[:int(len(whole_data)*0.6)]
+        self.test_data = whole_data[int(len(whole_data)*0.6)+1:]
+        self.test_label = whole_label[int(len(whole_data)*0.6)+1:]
+
+        print("Load Dataset Successfully! Train Data Length: %d\t Test Data Length: %d" %
+            (self.train_length, self.test_length))
 
 if __name__ == "__main__":
-    Data = DataLoader_CIFAR()
+    Data = DataLoader_CUB()
     Data.load_dataset()
     Data.save_dataset()
     Data.load_pickle_dataset()
