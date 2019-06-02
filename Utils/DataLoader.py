@@ -13,6 +13,8 @@ import os
 # Declare your data paths
 CIFAR_DATA_PATH = "./cifar-10-batches-py/"
 CUB_DATA_PATH = "./CUB_200_2011/images/"
+# CUB resize image
+TARGET_SIZE = (96, 96)
 
 '''
 Father Class Dataloader
@@ -174,6 +176,8 @@ class DataLoader_CUB(DataLoader):
                 img=cv2.merge([r,g,b])
                 ''' ended '''
 
+                img = cv2.resize(img, TARGET_SIZE, interpolation = cv2.INTER_AREA)
+
                 whole_data.append(img)
                 whole_label.append(class_num)
             print(class_dir)
@@ -190,6 +194,8 @@ class DataLoader_CUB(DataLoader):
         self.test_data = whole_data[int(len(whole_data)*0.6)+1:]
         self.test_label = whole_label[int(len(whole_data)*0.6)+1:]
 
+        self.train_length = len(self.train_data)
+        self.test_length = len(self.test_data)
         print("Load Dataset Successfully! Train Data Length: %d\t Test Data Length: %d" %
             (self.train_length, self.test_length))
 
