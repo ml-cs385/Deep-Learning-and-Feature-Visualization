@@ -13,6 +13,7 @@ import os
 # Declare your data paths
 CIFAR_DATA_PATH = "./cifar-10-batches-py/"
 CUB_DATA_PATH = "./CUB_200_2011/images/"
+STANFORD_DATA_PATH = "./Stanford_dog_Images/"
 # CUB resize image
 TARGET_SIZE = (96, 96)
 
@@ -199,8 +200,50 @@ class DataLoader_CUB(DataLoader):
         print("Load Dataset Successfully! Train Data Length: %d\t Test Data Length: %d" %
             (self.train_length, self.test_length))
 
+class DataLoader_Stanford(DataLoader):
+    def __init__(self):
+        super().__init__()
+
+    def load_dataset(self):
+        whole_data = []
+        whole_label = []
+
+        for i, class_dir in enumerate(os.listdir(STANFORD_DATA_PATH)):
+            class_num = i+1
+            for image_dir in os.listdir(os.path.join(STANFORD_DATA_PATH, class_dir)):
+                tmp_image_dir = os.path.join(STANFORD_DATA_PATH, class_dir, image_dir)
+                img = cv2.imread(tmp_image_dir)
+
+                ''' if the color reformation is needed '''
+                b,g,r=cv2.split(img)
+                img=cv2.merge([r,g,b])
+                ''' ended '''
+
+                img = cv2.resize(img, TARGET_SIZE, interpolation = cv2.INTER_AREA)
+
+                whole_data.append(img)
+                whole_label.append(class_num)
+            print(class_dir)
+            print(class_num)
+
+        whole_data = np.array(whole_data)
+        whole_label = np.array(whole_label)
+        permutation = np.random.permutation(len(whole_data))
+        whole_data = whole_data[permutation]
+        whole_label = whole_label[permutation]
+
+        self.train_data = whole_data[:int(len(whole_data)*0.6)]
+        self.train_label = whole_label[:int(len(whole_data)*0.6)]
+        self.test_data = whole_data[int(len(whole_data)*0.6)+1:]
+        self.test_label = whole_label[int(len(whole_data)*0.6)+1:]
+
+        self.train_length = len(self.train_data)
+        self.test_length = len(self.test_data)
+        print("Load Dataset Successfully! Train Data Length: %d\t Test Data Length: %d" %
+            (self.train_length, self.test_length))
+
 if __name__ == "__main__":
-    Data = DataLoader_CUB()
+    Data = DataLoader_Stanford()
     Data.load_dataset()
     Data.save_dataset()
     Data.load_pickle_dataset()
