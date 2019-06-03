@@ -79,7 +79,7 @@ class GradCam:
         x = np.clip(x, 0, 255).astype("uint8")
         return x
 
-    def grad_cam(input_model, image, category_index, layer_name):
+    def grad_cam(self, input_model, image, category_index, layer_name):
         model = Sequential()
         model.add(input_model)
         nb_classes = 1000
