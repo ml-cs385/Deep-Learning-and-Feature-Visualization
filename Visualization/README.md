@@ -1,5 +1,3 @@
-暂时正在修改，勿用！！！
-
 ## This is an API for feature analysis, including PCA, TSNE and GradCam
 
 Usage is simple, you can call the three methods by:
