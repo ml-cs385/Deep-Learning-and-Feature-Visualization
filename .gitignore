@@ -19,3 +19,4 @@ Datasets/cifar-10-batches-py/data_batch_4
 Datasets/cifar-10-batches-py/data_batch_5
 Datasets/cifar-10-batches-py/test_batch
 Datasets/CUB_200_2011/README
+*.png
