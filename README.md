@@ -141,3 +141,34 @@
 | 孙容一 | 2                    |
 | 王皓轩 | 3                    |
 
+### Image Segmentation笔记
+
+- Image Localization
+- Object Detection
+- Image Segmentation
+  - Semantic Segmentation
+  - Instance Segementation
+
+#### Techniques
+
+- Region-based Segmentation
+  - by threshold
+
+- Edge Detection Segmentation
+  - by sobel/ laplace operation
+- Clustering-based Segmentation
+
+#### Deep Learning Algorithms for Image Semantic Segmentation
+
+<https://medium.com/@arthur_ouaknine/review-of-deep-learning-algorithms-for-image-semantic-segmentation-509a600f7b57>
+
+- Fully Convolutional Network (FCN)
+- ParseNet
+- Convolutional and Deconvolutional Networks
+- U-Net
+- Feature Pyramid Network (FPN)
+- Pyramid Scene Parsing Network (PSPNet)
+- Mask R-CNN
+- DeepLab, DeepLabv3 and DeepLabv3+
+- Path Aggregation Network (PANet)
+- Context Encoding Network (EncNet)

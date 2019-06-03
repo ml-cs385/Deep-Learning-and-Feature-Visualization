@@ -11,9 +11,9 @@ import os
 
 # Paths
 # Declare your data paths
-CIFAR_DATA_PATH = "./cifar-10-batches-py/"
-CUB_DATA_PATH = "./CUB_200_2011/images/"
-STANFORD_DATA_PATH = "./Stanford_dog_Images/"
+CIFAR_DATA_PATH = "./Datasets/cifar-10-batches-py/"
+CUB_DATA_PATH = "./Datasets/CUB_200_2011/images/"
+STANFORD_DATA_PATH = "./Datasets/Stanford_dog_Images/"
 # CUB resize image
 TARGET_SIZE = (96, 96)
 
