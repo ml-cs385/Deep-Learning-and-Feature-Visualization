@@ -11,3 +11,11 @@ cifar-10-batches-py/test_batch
 *.txt
 CUB_200_2011/README
 *.pkl
+Datasets/cifar-10-batches-py/data_batch_2
+Datasets/cifar-10-batches-py/batches.meta
+Datasets/cifar-10-batches-py/data_batch_1
+Datasets/cifar-10-batches-py/data_batch_3
+Datasets/cifar-10-batches-py/data_batch_4
+Datasets/cifar-10-batches-py/data_batch_5
+Datasets/cifar-10-batches-py/test_batch
+Datasets/CUB_200_2011/README
