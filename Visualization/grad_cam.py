@@ -18,7 +18,7 @@ class GradCam:
         pass
 
     def target_category_loss(self, x, category_index, nb_classes):
-        return tf.multiply(x, K.one_hot([category_index, nb_classes]))
+        return tf.multiply(x, K.one_hot([category_index], nb_classes))
 
     def target_category_loss_output_shape(self, input_shape):
         return input_shape
@@ -83,8 +83,8 @@ class GradCam:
         model = Sequential()
         model.add(input_model)
         nb_classes = 1000
-        target_layer = lambda x: target_category_loss(x, category_index, nb_classes)
-        model.add(Lambda(target_layer, output_shape = target_category_loss_output_shape))
+        target_layer = lambda x: self.target_category_loss(x, category_index, nb_classes)
+        model.add(Lambda(target_layer, output_shape = self.target_category_loss_output_shape))
 
         loss = K.sum(model.layers[-1].output)
         conv_output = [l for l in model.layers[0].layers if l.name is layer_name][0].output
