@@ -10,7 +10,10 @@ import numpy as np
 import keras
 import sys
 import cv2
-
+from keras.models import Model
+import matplotlib.pyplot as plt
+#from keras.applications.resnet50 import ResNet50
+#from keras.applications.resnet50 import preprocess_input, decode_predictions
 
 
 class GradCam:
@@ -27,7 +30,7 @@ class GradCam:
         return x / (K.sqrt(K.mean(K.square(x))) + 1e-5)
 
     def load_image(self, path):
-        img_path = sys.argv[1]
+        img_path = path
         img = image.load_img(img_path, target_size=(224, 224))
         x = image.img_to_array(img)
         x= np.expand_dims(x, axis=0)
@@ -35,26 +38,26 @@ class GradCam:
         return x
 
     def register_gradient(self):
-        if "GuidedBackProp" not in ops_.gradient_registry._registry:
+        if "GuidedBackProp" not in ops._gradient_registry._registry:
             @ops.RegisterGradient("GuidedBackProp")
             def _GuidedBackProp(op, grad):
                 dtype = op.inputs[0].dtype
                 return grad * tf.cast(grad > 0., dtype) * tf.cast(op.inputs[0] > 0., dtype)
 
     def compile_saliency_function(self, model, activation_layer="block5_conv3"):
-        imput_img = model.input
-        layer.dict = dict([(layer.name, layer) for layer in model.layers[1:]])
-        layer.output = layer_dict[activation_layer].output
-        max_output = K.max(layer.output, axis=3)
-        saliency = K.gradient(K.sum(max_output), input_img)[0]
+        input_img = model.input
+        layer_dict = dict([(layer.name, layer) for layer in model.layers[1:]])
+        layer_output = layer_dict[activation_layer].output
+        max_output = K.max(layer_output, axis=3)
+        saliency = K.gradients(K.sum(max_output), input_img)[0]
         return K.function([input_img, K.learning_phase()], [saliency])
 
     def modify_backprop(self, model, name):
         g = tf.get_default_graph()
         with g.gradient_override_map({"Relu":name}):
             layer_dict = [layer for layer in model.layers[1:] if hasattr(layer, "activation")]
-            for layer in layer.dict:
-                if layer.activation == keras.activation.relu:
+            for layer in layer_dict:
+                if layer.activation == keras.activations.relu:
                     layer.activation = tf.nn.relu
 
             new_model = VGG16(weights="imagenet")
@@ -75,35 +78,39 @@ class GradCam:
 
         x *= 255
         if K.image_dim_ordering() == "th":
-            x = .transpose((1, 2, 0))
+            x = x.transpose((1, 2, 0))
         x = np.clip(x, 0, 255).astype("uint8")
         return x
 
+    def _compute_gradients(self, tensor, var_list):
+        grads = tf.gradients(tensor, var_list)
+        return [grad if grad is not None else tf.zeros_like(var) for var, grad in zip(var_list, grads)]
+
     def grad_cam(self, input_model, image, category_index, layer_name):
-        model = Sequential()
-        model.add(input_model)
         nb_classes = 1000
         target_layer = lambda x: self.target_category_loss(x, category_index, nb_classes)
-        model.add(Lambda(target_layer, output_shape = self.target_category_loss_output_shape))
-
-        loss = K.sum(model.layers[-1].output)
-        conv_output = [l for l in model.layers[0].layers if l.name is layer_name][0].output
-        grads = normalize(K.gradients(loss, conv_output)[0])
-        gradient_function = K.function([model.layers[0].input], [conv_output, grads])
+        x = Lambda(target_layer, output_shape = self.target_category_loss_output_shape)(input_model.output)
+        model = Model(inputs=input_model.input, outputs=x)
+        #model.summary()
+        loss = K.sum(model.output)
+        conv_output =  [l for l in model.layers if l.name is layer_name][0].output
+        grads = self.normalize(self._compute_gradients(loss, [conv_output])[0])
+        gradient_function = K.function([model.input], [conv_output, grads])
 
         output, grads_val = gradient_function([image])
         output, grads_val = output[0, :], grads_val[0, :, :, :]
 
-        weights = np.mean(grads_val, axis=(0, 1))
-        cam = np.ones(output.shape[0:2], dtype=np.float32)
+        weights = np.mean(grads_val, axis = (0, 1))
+        cam = np.ones(output.shape[0 : 2], dtype = np.float32)
 
         for i, w in enumerate(weights):
-            cam += w*output[:, :, i]
+            cam += w * output[:, :, i]
 
         cam = cv2.resize(cam, (224, 224))
         cam = np.maximum(cam, 0)
         heatmap = cam / np.max(cam)
 
+        #Return to BGR [0..255] from the preprocessed image
         image = image[0, :]
         image -= np.min(image)
         image = np.minimum(image, 255)
@@ -113,22 +120,48 @@ class GradCam:
         cam = 255 * cam / np.max(cam)
         return np.uint8(cam), heatmap
 
-
     def analyze(self, path):
         preprocessed_input = self.load_image(path)
-        model = VGG16(weight="imagenet")
+        model = VGG16(weights="imagenet")
+        #model = ResNet50(weights="imagenet")
         predictions = model.predict(preprocessed_input)
         top_1 = decode_predictions(predictions)[0][0]
         print ("Predicted class:")
         print ("%s (%s) with probability %.2f" % (top_1[1], top_1[0], top_1[2]))
 
         predicted_class = np.argmax(predictions)
-        cam, heatmap = self.grad_cam(model, preprocessed_input, predicted_class, "block5_conv3")
-        cv2.imwrite("gradcam.jpg", cam)
 
-        self.register_gradient()
-        guided_model = self.modify_backprop(model, "GuidedBackProp")
-        saliency_fn = self.compile_saliency_function(guided_model)
-        saliency = saliency_fn([preprocessed_input, 0])
-        gradcam = saliency[0] * heatmap[..., np.newaxis]
-        cv2.imwrite("guided_gradcam.jpg", self.deprocess_image(gradcam))
+        visualizeBlocks = ["block1_conv2", "block2_conv2", "block3_conv3", "block4_conv3", "block5_conv3"]
+        cam_list = []
+        guided_list = []
+        id = 1
+        plt.figure(figsize=(20, 10))
+        plt.suptitle("GradCam Results")
+        for visualize_layer in visualizeBlocks:
+            cam, heatmap = self.grad_cam(model, preprocessed_input, predicted_class, visualize_layer)
+            #cv2.imwrite("gradcam.jpg", cam)
+            #cam_list.append(cam)
+
+            self.register_gradient()
+            guided_model = self.modify_backprop(model, "GuidedBackProp")
+            saliency_fn = self.compile_saliency_function(guided_model)
+            saliency = saliency_fn([preprocessed_input, 0])
+            gradcam = saliency[0] * heatmap[..., np.newaxis]
+            #cv2.imwrite("guided_gradcam.jpg", self.deprocess_image(gradcam))
+            #guided_list.append(self.deprocess_image(gradcam))
+
+            plt.subplot(2, 5, id)
+            plt.imshow(cam)
+            if (id == 1):
+                plt.ylabel("GradCam")
+            plt.title(visualize_layer)
+
+            plt.subplot(2, 5, id+5)
+            plt.imshow(self.deprocess_image(gradcam))
+            if (id == 1):
+                plt.ylabel("Guided GradCam")
+
+            id += 1
+        plt.axis("off")
+        plt.savefig("GCresult.png")
+        plt.show()

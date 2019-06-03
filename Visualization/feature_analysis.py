@@ -31,4 +31,11 @@ class FeatureAnalyzer:
 
     def grad_cam_analyze(self, path):
         gradCam = GradCam()
-        gradcam.analyze(path)
+        gradCam.analyze(path)
+
+"""
+if __name__=="__main__":
+    featureAnalyzer = FeatureAnalyzer()
+    path = "cat_dog.png"
+    featureAnalyzer.grad_cam_analyze(path)
+"""
