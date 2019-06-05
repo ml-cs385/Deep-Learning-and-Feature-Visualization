@@ -173,10 +173,10 @@
 - Path Aggregation Network (PANet)
 - Context Encoding Network (EncNet)
 
-#### Visualization Results
+#### Visualization Results (WHX updates)
 
 - GradCam results for some specific images (model based on VGG16)
 
 - PCA and TSNE results on different models (including VGG16, ResNet50)
 
-4~5 images in total
+- 4~5 images in total
