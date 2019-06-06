@@ -1,4 +1,5 @@
-# Notice：在此更新进度
+Notice：在此更新进度
+
 根据的代码改写了TensorFlow-gpu 1.4版本的ResNet，目前可以运行
 分类的模型怎么改，大家有没有好一点的建议。。实现了vgg16/19和resnet的basic代码，进一步更改模型只需要调整细节就好，等待数据集跑。先去北京了各位！
 
@@ -172,3 +173,43 @@
 - DeepLab, DeepLabv3 and DeepLabv3+
 - Path Aggregation Network (PANet)
 - Context Encoding Network (EncNet)
+
+#### CUB Dataset
+
+|          Model          |    Class IoU    |  mIoU  |
+| :---------------------: | :-------------: | :----: |
+|    U-Net with VGG16     |                 |        |
+|     FCN with FCN_8      | [0.8247 0.2659] | 0.5453 |
+|     FCN with FCN_32     | [0.8163 0.3100] | 0.5632 |
+| FCN with FCN_8 and VGG  | [0.8169 0.2972] | 0.5570 |
+| FCN with FCN_32 and VGG | [0.8154 0.2865] | 0.5510 |
+|   Fcn_fcn_8_mobilenet   | [0.8062 0.2844] | 0.5453 |
+|     fcn_8_resnet50      |                 |        |
+|     fcn_32_resnet50     |                 |        |
+|    fcn_32_mobilenet     |  0.8038 0.2898  | 0.5468 |
+|         pspnet          |                 |        |
+|       vgg_pspnet        |                 |        |
+|     resnet50_pspnet     |                 |        |
+|        unet_mini        |                 |        |
+|          unet           |                 |        |
+|        vgg_unet         |  0.6980 0.1803  | 0.4396 |
+|      resnet50_unet      |  0.7615 0.2809  | 0.5220 |
+|     mobilenet_unet      |  0.8065 0.2792  | 0.5444 |
+|         segnet          |                 |        |
+|       vgg_segnet        |                 |        |
+|     resnet50_segnet     |                 |        |
+|    mobilenet_segnet     |                 |        |
+
+### VOC Dataset
+
+|      Model       |  mIoC  |
+| :--------------: | :----: |
+| U-Net with VGG16 | 0.6945 |
+|                  |        |
+|                  |        |
+|                  |        |
+|                  |        |
+|                  |        |
+|                  |        |
+|                  |        |
+
