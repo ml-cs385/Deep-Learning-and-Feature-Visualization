@@ -103,7 +103,7 @@ Notice：在此更新进度
 
 3. Feature Analysis
 
-   - PCA: 
+   - PCA:
 
      - 抽取训练后模型的feature，使用get_image_features
      - 降维
@@ -213,3 +213,10 @@ Notice：在此更新进度
 |                  |        |
 |                  |        |
 
+#### Visualization Results (WHX updates)
+
+- GradCam results for some specific images (model based on VGG16)
+
+- PCA and TSNE results on different models (including VGG16, ResNet50)
+
+- 4~5 images in total
