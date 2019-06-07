@@ -203,11 +203,19 @@ Notice：在此更新进度
 
 Official Results
 
-| Model |      |
-| ----- | ---- |
-|       |      |
+|                   Model                    | mIoU  |
+| :----------------------------------------: | :---: |
+|                    FCN                     | 62.2% |
+|                Faster R-CNN                | 78.8% |
+|                  ParseNet                  | 69.8% |
+| Convolutional and Deconvolutional Networks | 72.5% |
+|                   PSPNet                   | 85.4% |
+|                  DeepLab                   | 79.7% |
+|                 DeepLabv3                  | 86.9% |
+|                 DeepLabv3+                 | 89.0% |
+|                   EncNet                   | 85.9% |
 
-
+![img](https://miro.medium.com/max/1050/1*MsVAhHvNuFARowPZRiGiJQ.png)
 
 |        Model         |  mIoC  |
 | :------------------: | :----: |
