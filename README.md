@@ -220,13 +220,26 @@ Official Results
 |        Model         |  mIoC  |
 | :------------------: | :----: |
 | U-Net with Resnet-20 | 0.5452 |
-|                      |        |
-|                      |        |
-|                      |        |
-|                      |        |
-|                      |        |
-|                      |        |
-|                      |        |
+|        fcn_8         |        |
+|        fcn_32        |        |
+|    **fcn_8_vgg**     |        |
+|      fcn_32_vgg      |        |
+|    fcn_8_resnet50    |        |
+|   fcn_32_resnet50    |        |
+|   fcn_8_mobilenet    |        |
+|   fcn_32_mobilenet   |        |
+|        pspnet        |        |
+|    **vgg_pspnet**    |        |
+|   resnet50_pspnet    |        |
+|      unet_mini       |        |
+|         unet         |        |
+|       vgg_unet       |        |
+|  **resnet50_unet**   | 0.5452 |
+|    mobilenet_unet    |        |
+|        segnet        |        |
+|      vgg_segnet      |        |
+| **resnet50_segnet**  |        |
+|   mobilenet_segnet   |        |
 
 #### Visualization Results (WHX updates)
 
