@@ -178,7 +178,6 @@ Notice：在此更新进度
 
 |          Model          |    Class IoU    |  mIoU  |
 | :---------------------: | :-------------: | :----: |
-|    U-Net with VGG16     |                 |        |
 |     FCN with FCN_8      | [0.8247 0.2659] | 0.5453 |
 |     FCN with FCN_32     | [0.8163 0.3100] | 0.5632 |
 | FCN with FCN_8 and VGG  | [0.8169 0.2972] | 0.5570 |
@@ -202,16 +201,24 @@ Notice：在此更新进度
 
 ### VOC Dataset
 
-|      Model       |  mIoC  |
-| :--------------: | :----: |
-| U-Net with VGG16 | 0.6945 |
-|                  |        |
-|                  |        |
-|                  |        |
-|                  |        |
-|                  |        |
-|                  |        |
-|                  |        |
+Official Results
+
+| Model |      |
+| ----- | ---- |
+|       |      |
+
+
+
+|        Model         |  mIoC  |
+| :------------------: | :----: |
+| U-Net with Resnet-20 | 0.5452 |
+|                      |        |
+|                      |        |
+|                      |        |
+|                      |        |
+|                      |        |
+|                      |        |
+|                      |        |
 
 #### Visualization Results (WHX updates)
 
