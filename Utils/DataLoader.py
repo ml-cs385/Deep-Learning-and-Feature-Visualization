@@ -15,7 +15,7 @@ CIFAR_DATA_PATH = "./Datasets/cifar-10-batches-py/"
 CUB_DATA_PATH = "./Datasets/CUB_200_2011/images/"
 STANFORD_DATA_PATH = "./Datasets/Stanford_dog_Images/"
 # CUB resize image
-TARGET_SIZE = (96, 96)
+TARGET_SIZE = (224, 224)
 
 '''
 Father Class Dataloader
@@ -57,6 +57,9 @@ class DataLoader:
         self.train_label = pickle.load(fr_train_label)
         self.test_data = pickle.load(fr_test_data)
         self.test_label = pickle.load(fr_test_label)
+
+        self.train_length = len(self.train_data)
+        self.test_length = len(self.test_data)
         
         fr_train_data.close()
         fr_train_label.close()
@@ -244,8 +247,8 @@ class DataLoader_Stanford(DataLoader):
 
 if __name__ == "__main__":
     Data = DataLoader_Stanford()
-    Data.load_dataset()
-    Data.save_dataset()
+    # Data.load_dataset()
+    # Data.save_dataset()
     Data.load_pickle_dataset()
     print(Data.train_label.shape)
 
