@@ -176,28 +176,28 @@ Notice：在此更新进度
 
 #### CUB Dataset
 
-|          Model          |    Class IoU    |  mIoU  |
-| :---------------------: | :-------------: | :----: |
-|     FCN with FCN_8      | [0.8247 0.2659] | 0.5453 |
-|     FCN with FCN_32     | [0.8163 0.3100] | 0.5632 |
-| FCN with FCN_8 and VGG  | [0.8169 0.2972] | 0.5570 |
-| FCN with FCN_32 and VGG | [0.8154 0.2865] | 0.5510 |
-|   Fcn_fcn_8_mobilenet   | [0.8062 0.2844] | 0.5453 |
-|     fcn_8_resnet50      |                 |        |
-|     fcn_32_resnet50     |                 |        |
-|    fcn_32_mobilenet     |  0.8038 0.2898  | 0.5468 |
-|         pspnet          |                 |        |
-|       vgg_pspnet        |                 |        |
-|     resnet50_pspnet     |                 |        |
-|        unet_mini        |                 |        |
-|          unet           |                 |        |
-|        vgg_unet         |  0.6980 0.1803  | 0.4396 |
-|      resnet50_unet      |  0.7615 0.2809  | 0.5220 |
-|     mobilenet_unet      |  0.8065 0.2792  | 0.5444 |
-|         segnet          |                 |        |
-|       vgg_segnet        |                 |        |
-|     resnet50_segnet     |                 |        |
-|    mobilenet_segnet     |                 |        |
+|           Model            |    Class IoU    |   mIoU   |
+| :------------------------: | :-------------: | :------: |
+|       FCN with FCN_8       | [0.8247 0.2659] |  0.5453  |
+|      FCN with FCN_32       | [0.8163 0.3100] |  0.5632  |
+| **FCN with FCN_8 and VGG** | [0.8169 0.2972] |  0.5570  |
+|  FCN with FCN_32 and VGG   | [0.8154 0.2865] |  0.5510  |
+|    Fcn_fcn_8_mobilenet     | [0.8062 0.2844] |  0.5453  |
+|       fcn_8_resnet50       |                 |    x     |
+|      fcn_32_resnet50       |                 |    x     |
+|      fcn_32_mobilenet      |  0.8038 0.2898  |  0.5468  |
+|           pspnet           |                 | `0.5273` |
+|       **vgg_pspnet**       |                 |  0.5491  |
+|      resnet50_pspnet       |                 |    x     |
+|         unet_mini          |                 | `0.4320` |
+|            unet            |                 | `0.4233` |
+|        **vgg_unet**        |  0.6980 0.1803  |  0.4396  |
+|       resnet50_unet        |  0.7615 0.2809  |  0.5220  |
+|       mobilenet_unet       |  0.8065 0.2792  |  0.5444  |
+|           segnet           |                 | `0.4892` |
+|       **vgg_segnet**       |                 |  0.5279  |
+|      resnet50_segnet       |                 | `0.5432` |
+|      mobilenet_segnet      |                 | `0.5265` |
 
 ### VOC Dataset
 
@@ -222,23 +222,23 @@ Official Results
 | U-Net with Resnet-20 | 0.5452 |
 |        fcn_8         |        |
 |        fcn_32        |        |
-|    **fcn_8_vgg**     |        |
+|    **fcn_8_vgg**     | 55.34  |
 |      fcn_32_vgg      |        |
 |    fcn_8_resnet50    |        |
 |   fcn_32_resnet50    |        |
 |   fcn_8_mobilenet    |        |
 |   fcn_32_mobilenet   |        |
 |        pspnet        |        |
-|    **vgg_pspnet**    |        |
+|    **vgg_pspnet**    | 58.25  |
 |   resnet50_pspnet    |        |
 |      unet_mini       |        |
 |         unet         |        |
 |       vgg_unet       |        |
-|  **resnet50_unet**   | 0.5452 |
+|  **resnet50_unet**   | 54.52  |
 |    mobilenet_unet    |        |
 |        segnet        |        |
 |      vgg_segnet      |        |
-| **resnet50_segnet**  |        |
+| **resnet50_segnet**  | 56.20  |
 |   mobilenet_segnet   |        |
 
 #### Visualization Results (WHX updates)
